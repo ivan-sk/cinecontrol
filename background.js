@@ -1,5 +1,5 @@
-chrome.webNavigation.onCompleted.addListener(function(details) {
-  chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-    chrome.tabs.sendMessage(tabs[0].id, { action: 'runSnippet' });
-  });
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+  if (changeInfo.status === 'complete' && tab.url.includes('www.youtube.com')) {
+    chrome.tabs.sendMessage(tabId, { action: 'runSnippet' });
+  }
 });
